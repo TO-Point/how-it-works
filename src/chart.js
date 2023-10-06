@@ -147,22 +147,27 @@ document
     // Trigger recalculation
     document.getElementById("currentValue").dispatchEvent(new Event("input"));
   });
-// Event listener for input changes in the current value field
-let input = document.getElementById("currentValue");
-let timeoutID = null;
-input.addEventListener("input", () => {
-  clearTimeout(timeoutID);
 
-  if (Number(input.value) > Number(input.max)) {
-    input.value = input.max;
-  }
-  if (Number(input.value) < Number(input.min)) {
-    timeoutID = setTimeout(() => {
-      input.value = input.min;
-    }, 5000);
-  }
-  performCalculations();
-});
+// Event listener for input changes in the current value field
+document
+  .getElementById("currentValue")
+  .addEventListener("input", performCalculations);
+// // Event listener for input changes in the current value field
+// let input = document.getElementById("currentValue");
+// let timeoutID = null;
+// input.addEventListener("input", () => {
+//   clearTimeout(timeoutID);
+
+//   if (Number(input.value) > Number(input.max)) {
+//     input.value = input.max;
+//   }
+//   if (Number(input.value) < Number(input.min)) {
+//     timeoutID = setTimeout(() => {
+//         input.value = input.min;
+//     }, 5000);
+//   }
+//   performCalculations();
+// });
 
 // Event listener for changes in the custom range slider
 document
