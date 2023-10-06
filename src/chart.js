@@ -149,12 +149,17 @@ document
   });
 // Event listener for input changes in the current value field
 let input = document.getElementById("currentValue");
+let timeoutID = null;
 input.addEventListener("input", () => {
+  clearTimeout(timeoutID);
+
   if (Number(input.value) > Number(input.max)) {
     input.value = input.max;
   }
   if (Number(input.value) < Number(input.min)) {
-    input.value = input.min;
+    timeoutID = setTimeout(() => {
+      input.value = input.min;
+    }, 5000);
   }
   performCalculations();
 });
