@@ -11,8 +11,11 @@ function performCalculations() {
   yearlyData = [];
 
   // Get the starting home value from the input field and parse it as float
+  // let startingHomeValue = parseFloat(
+  //   document.getElementById("currentValue").value
+  // );
   let startingHomeValue = parseFloat(
-    document.getElementById("currentValue").value
+    document.getElementById("currentValue").value.replace(/,/g, '')
   );
 
   // Validate if the starting home value is a number
@@ -84,6 +87,14 @@ function performCalculations() {
         shareBasedRepayment
       );
 
+      // Event listener to format the input value with commas whenever it changes
+document.getElementById("currentValue").addEventListener("input", function() {
+  this.value = formatNumber(this.value.replace(/,/g, ''));
+});
+
+// Event listener for input changes in the current value field
+document.getElementById("currentValue").addEventListener("input", performCalculations);
+
       // Update the visibility of the cap indicator based if the cap was used
       let capIndicator = chartCol.querySelector(".cap-indicator");
       if (capIndicator) {
@@ -129,7 +140,6 @@ function getSelectedChartColWrap() {
 document
   .querySelector(".custom-range-slider")
   .addEventListener("input", function () {
-    // New code
     // Get slider position
     let sliderPosition = parseInt(this.value);
     let appreciation = appreciationRates[sliderPosition];
@@ -152,22 +162,6 @@ document
 document
   .getElementById("currentValue")
   .addEventListener("input", performCalculations);
-// // Event listener for input changes in the current value field
-// let input = document.getElementById("currentValue");
-// let timeoutID = null;
-// input.addEventListener("input", () => {
-//   clearTimeout(timeoutID);
-
-//   if (Number(input.value) > Number(input.max)) {
-//     input.value = input.max;
-//   }
-//   if (Number(input.value) < Number(input.min)) {
-//     timeoutID = setTimeout(() => {
-//         input.value = input.min;
-//     }, 5000);
-//   }
-//   performCalculations();
-// });
 
 // Event listener for changes in the custom range slider
 document
@@ -184,7 +178,7 @@ document
 
 // On window load, set default values and perform initial calculations
 window.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("currentValue").value = "400000";
+  document.getElementById("currentValue").value = "400,000";
   performCalculations();
   document.querySelector(".calc-pricing-explainer").style.display = "none";
   // Add click event listeners to chart column wrappers
@@ -243,7 +237,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 document.addEventListener("DOMContentLoaded", function () {
   const rangeSlider = document.querySelector(".custom-range-slider");
   const divElement = document.querySelector(".appreciation-type");
-
   // Update the label based on the slider value
   rangeSlider.addEventListener("input", function () {
     switch (parseInt(rangeSlider.value)) {
@@ -265,5 +258,8 @@ document.addEventListener("DOMContentLoaded", function () {
       default:
         divElement.textContent = "unknown value";
     }
+  });
+  document.getElementById("currentValue").addEventListener("input", function(e) {
+    e.target.value = e.target.value.replace(/[^0-9]/g, "");
   });
 });
