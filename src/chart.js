@@ -21,7 +21,7 @@ function performCalculations() {
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
     // Calculate the initial offer (10% of home value)
-    let pointOffer = startingHomeValue * 0.1;
+    let pointOffer = startingHomeValue * 0.2;
 
     // Define a constant to multiply with appreciation starting amount
     let appreciationMultiple = 1.9;
