@@ -99,9 +99,9 @@ document.getElementById("currentValue").addEventListener("input", performCalcula
       let capIndicator = chartCol.querySelector(".cap-indicator");
       if (capIndicator) {
         if (isCapUsed) {
-          capIndicator.style.display = "block";
+          capIndicator.style.opacity = "1";
         } else {
-          capIndicator.style.display = "none";
+          capIndicator.style.opacity = "0";
         }
       }
     }
