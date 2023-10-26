@@ -77,13 +77,24 @@ function performCalculations() {
       // Event listener for input changes in the current value field
       document.getElementById("currentValue").addEventListener("input", performCalculations);
 
+      // // Update the visibility of the cap indicator based if the cap was used
+      // let capIndicator = chartCol.querySelector(".cap-indicator");
+      // if (capIndicator) {
+      //   if (isCapUsed) {
+      //     capIndicator.style.opacity = "1";
+      //   } else {
+      //     capIndicator.style.opacity = "0";
+      //   }
+      // }
       // Update the visibility of the cap indicator based if the cap was used
       let capIndicator = chartCol.querySelector(".cap-indicator");
       if (capIndicator) {
         if (isCapUsed) {
           capIndicator.style.opacity = "1";
+          capIndicator.style.pointerEvents = "auto";
         } else {
           capIndicator.style.opacity = "0";
+          capIndicator.style.pointerEvents = "none";
         }
       }
     }
