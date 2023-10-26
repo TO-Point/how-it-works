@@ -6,111 +6,14 @@ let yearlyData = [];
 let appreciationRates = [-0.015, 0, 0.015, 0.035, 0.055];
 
 // Main function to perform calculations and update the UI
-// function performCalculations() {
-//   // Reset the yearly data array
-//   yearlyData = [];
-
-//   // Get the starting home value from the input field and parse it as float
-//   // let startingHomeValue = parseFloat(
-//   //   document.getElementById("currentValue").value
-//   // );
-//   let startingHomeValue = parseFloat(document.getElementById("currentValue").value.replace(/,/g, ""));
-
-//   // Validate if the starting home value is a number
-//   if (!isNaN(startingHomeValue)) {
-//     // Calculate the initial offer (10% of home value)
-//     let pointOffer = startingHomeValue * 0.2;
-
-//     // Define a constant to multiply with appreciation starting amount
-//     let appreciationMultiple = 1.9;
-//     // let appreciationStartingAmount = startingHomeValue * 0.725;
-//     // Calculate the appreciation starting amount
-//     let appreciationStartingAmount = Math.round((startingHomeValue * 0.725) / 1000) * 1000;
-
-//     // Update the UI with the calculated point offer and appreciation starting amount
-//     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
-//     document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
-
-//     // // Get the appreciation rate from the slider
-//     let sliderPosition = parseInt(document.querySelector(".custom-range-slider").value);
-//     let appreciation = appreciationRates[sliderPosition];
-
-//     // Determine if the rate is depreciation
-//     let isDepreciation = appreciation < 0;
-
-//     // Loop through each year (step of 2) up to 30 years
-//     for (let year = 2; year <= 30; year += 2) {
-//       // Calculate the home value for each year based on appreciation
-//       let homeValueForYear = startingHomeValue * Math.pow(1 + appreciation, year);
-
-//       let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
-
-//       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
-
-//       let capBasedRepayment = pointOffer * Math.pow(1.2, year);
-
-//       let shareBasedRepayment = shareOfAppreciation + pointOffer;
-
-//       let repayment = Math.min(capBasedRepayment, shareBasedRepayment);
-//       let isCapUsed = capBasedRepayment == repayment;
-
-//       // Store all calculated data for the year
-//       yearlyData.push({
-//         year: year,
-//         homeValueForYear: homeValueForYear,
-//         pointPercentage: pointPercentage,
-//         shareOfAppreciation: shareOfAppreciation,
-//         capBasedRepayment: capBasedRepayment,
-//         shareBasedRepayment: shareBasedRepayment,
-//         repayment: repayment,
-//         isCapUsed: isCapUsed,
-//       });
-
-//       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
-//       console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
-
-//       // Event listener to format the input value with commas whenever it changes
-//       document.getElementById("currentValue").addEventListener("input", function () {
-//         this.value = formatNumber(this.value.replace(/,/g, ""));
-//       });
-
-//       // Event listener for input changes in the current value field
-//       document.getElementById("currentValue").addEventListener("input", performCalculations);
-
-//       // Update the visibility of the cap indicator based if the cap was used
-//       let capIndicator = chartCol.querySelector(".cap-indicator");
-//       if (capIndicator) {
-//         if (isCapUsed) {
-//           capIndicator.style.opacity = "1";
-//         } else {
-//           capIndicator.style.opacity = "0";
-//         }
-//       }
-//     }
-
-//     // Adjust the height of chart columns based on the highest value
-//     const referenceValue = isDepreciation ? startingHomeValue : yearlyData[yearlyData.length - 1].homeValueForYear;
-//     yearlyData.forEach((data) => {
-//       const chartCol = document.querySelector(`.chart-col[data-year="${data.year}"]`);
-
-//       if (chartCol) {
-//         const heightPercentage = (data.homeValueForYear / referenceValue) * 90;
-//         chartCol.style.height = `${heightPercentage}%`;
-//       }
-//     });
-//   }
-
-//   // Trigger click event on the selected chart column wrapper
-//   const selectedChartColWrap = getSelectedChartColWrap();
-//   if (selectedChartColWrap) {
-//     selectedChartColWrap.click();
-//   }
-// }
 function performCalculations() {
   // Reset the yearly data array
   yearlyData = [];
 
   // Get the starting home value from the input field and parse it as float
+  // let startingHomeValue = parseFloat(
+  //   document.getElementById("currentValue").value
+  // );
   let startingHomeValue = parseFloat(document.getElementById("currentValue").value.replace(/,/g, ""));
 
   // Validate if the starting home value is a number
@@ -120,6 +23,7 @@ function performCalculations() {
 
     // Define a constant to multiply with appreciation starting amount
     let appreciationMultiple = 1.9;
+    // let appreciationStartingAmount = startingHomeValue * 0.725;
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.725) / 1000) * 1000;
 
@@ -127,7 +31,7 @@ function performCalculations() {
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
     document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
 
-    // Get the appreciation rate from the slider
+    // // Get the appreciation rate from the slider
     let sliderPosition = parseInt(document.querySelector(".custom-range-slider").value);
     let appreciation = appreciationRates[sliderPosition];
 
@@ -161,31 +65,45 @@ function performCalculations() {
         repayment: repayment,
         isCapUsed: isCapUsed,
       });
+
+      const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
+      console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
+
+      // Event listener to format the input value with commas whenever it changes
+      document.getElementById("currentValue").addEventListener("input", function () {
+        this.value = formatNumber(this.value.replace(/,/g, ""));
+      });
+
+      // Event listener for input changes in the current value field
+      document.getElementById("currentValue").addEventListener("input", performCalculations);
+
+      // Update the visibility of the cap indicator based if the cap was used
+      let capIndicator = chartCol.querySelector(".cap-indicator");
+      if (capIndicator) {
+        if (isCapUsed) {
+          capIndicator.style.opacity = "1";
+        } else {
+          capIndicator.style.opacity = "0";
+        }
+      }
     }
 
-    // Get all elements with the class 'cap-indicator'
-    var elements = document.querySelectorAll(".cap-indicator");
+    // Adjust the height of chart columns based on the highest value
+    const referenceValue = isDepreciation ? startingHomeValue : yearlyData[yearlyData.length - 1].homeValueForYear;
+    yearlyData.forEach((data) => {
+      const chartCol = document.querySelector(`.chart-col[data-year="${data.year}"]`);
 
-    // Iterate through each element
-    elements.forEach(function (elem) {
-      // Clone the element and replace the old one
-      var newElem = elem.cloneNode(true);
-      elem.parentNode.replaceChild(newElem, elem);
-
-      // Attach a mouseover event listener
-      newElem.addEventListener("mouseover", function (event) {
-        // Check if the opacity of the cap-indicator is 1
-        if (window.getComputedStyle(newElem).opacity == "1") {
-          // If opacity is 1, hide the tt-hover-block, allowing Webflow hover interactions
-          newElem.style.display = "none";
-          console.log("Element is fully visible! Webflow hover interaction can proceed.");
-        } else {
-          // If opacity is less than 1, show the tt-hover-block, effectively blocking the hover interaction on cap-indicator
-          newElem.style.display = "block";
-          console.log("Element is not fully visible. Hover action blocked.");
-        }
-      });
+      if (chartCol) {
+        const heightPercentage = (data.homeValueForYear / referenceValue) * 90;
+        chartCol.style.height = `${heightPercentage}%`;
+      }
     });
+  }
+
+  // Trigger click event on the selected chart column wrapper
+  const selectedChartColWrap = getSelectedChartColWrap();
+  if (selectedChartColWrap) {
+    selectedChartColWrap.click();
   }
 }
 
