@@ -172,19 +172,16 @@ function performCalculations() {
       var newElem = elem.cloneNode(true);
       elem.parentNode.replaceChild(newElem, elem);
 
-      // Get the associated tt-hover-block for this cap-indicator
-      var hoverBlocker = newElem.querySelector(".tt-hover-block");
-
       // Attach a mouseover event listener
       newElem.addEventListener("mouseover", function (event) {
         // Check if the opacity of the cap-indicator is 1
         if (window.getComputedStyle(newElem).opacity == "1") {
           // If opacity is 1, hide the tt-hover-block, allowing Webflow hover interactions
-          hoverBlocker.style.display = "none";
+          newElem.style.display = "none";
           console.log("Element is fully visible! Webflow hover interaction can proceed.");
         } else {
           // If opacity is less than 1, show the tt-hover-block, effectively blocking the hover interaction on cap-indicator
-          hoverBlocker.style.display = "block";
+          newElem.style.display = "block";
           console.log("Element is not fully visible. Hover action blocked.");
         }
       });
