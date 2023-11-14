@@ -20,7 +20,7 @@ function performCalculations() {
     let appreciationMultiple = 1.9;
     // let appreciationStartingAmount = startingHomeValue * 0.725;
     // Calculate the appreciation starting amount
-    let appreciationStartingAmount = Math.round((startingHomeValue * 0.725) / 1000) * 1000;
+    let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
 
     // Update the UI with the calculated point offer and appreciation starting amount
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
