@@ -18,7 +18,7 @@ function performCalculations() {
 
     // Define a constant to multiply with appreciation starting amount
     let appreciationMultiple = 1.9;
-    // let appreciationStartingAmount = startingHomeValue * 0.725;
+    // let appreciationStartingAmount = Math.round((startingHomeValue * 0.725) / 1000) * 1000;
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
 
