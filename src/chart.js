@@ -9,29 +9,21 @@ let appreciationRates = [-0.015, 0, 0.015, 0.035, 0.055];
 function performCalculations() {
   // Reset the yearly data array
   yearlyData = [];
-
-  // Get the starting home value from the input field and parse it as float
-  // let startingHomeValue = parseFloat(
-  //   document.getElementById("currentValue").value
-  // );
   let startingHomeValue = parseFloat(document.getElementById("currentValue").value.replace(/,/g, ""));
 
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
-    // Calculate the initial offer (10% of home value)
-    let pointOffer = startingHomeValue * 0.2;
+    // Calculate the initial offer (16% of home value)
+    let pointOffer = startingHomeValue * 0.16;
 
-    // Define a constant to multiply with appreciation starting amount
-    let appreciationMultiple = 1.9;
-    // let appreciationStartingAmount = startingHomeValue * 0.725;
     // Calculate the appreciation starting amount
-    let appreciationStartingAmount = Math.round((startingHomeValue * 0.725) / 1000) * 1000;
+    let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
 
     // Update the UI with the calculated point offer and appreciation starting amount
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
     document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
 
-    // // Get the appreciation rate from the slider
+    // Get the appreciation rate from the slider
     let sliderPosition = parseInt(document.querySelector(".custom-range-slider").value);
     let appreciation = appreciationRates[sliderPosition];
 
@@ -43,11 +35,12 @@ function performCalculations() {
       // Calculate the home value for each year based on appreciation
       let homeValueForYear = startingHomeValue * Math.pow(1 + appreciation, year);
 
-      let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
+      // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
+      let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
-      let capBasedRepayment = pointOffer * Math.pow(1.2, year);
+      let capBasedRepayment = pointOffer * Math.pow(1 + 0.2 / 12, year * 12);
 
       let shareBasedRepayment = shareOfAppreciation + pointOffer;
 
@@ -76,16 +69,6 @@ function performCalculations() {
 
       // Event listener for input changes in the current value field
       document.getElementById("currentValue").addEventListener("input", performCalculations);
-
-      // // Update the visibility of the cap indicator based if the cap was used
-      // let capIndicator = chartCol.querySelector(".cap-indicator");
-      // if (capIndicator) {
-      //   if (isCapUsed) {
-      //     capIndicator.style.opacity = "1";
-      //   } else {
-      //     capIndicator.style.opacity = "0";
-      //   }
-      // }
       // Update the visibility of the cap indicator based if the cap was used
       let capIndicator = chartCol.querySelector(".cap-indicator");
       if (capIndicator) {
@@ -158,7 +141,7 @@ document.querySelector(".custom-range-slider").addEventListener("input", functio
 
 // On window load, set default values and perform initial calculations
 window.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("currentValue").value = "400,000";
+  document.getElementById("currentValue").value = "500,000";
   performCalculations();
   document.querySelector(".calc-pricing-explainer").style.display = "none";
   // Add click event listeners to chart column wrappers
