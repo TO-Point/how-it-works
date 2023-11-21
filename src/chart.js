@@ -17,8 +17,7 @@ function performCalculations() {
     let pointOffer = startingHomeValue * 0.16;
 
     // Define a constant to multiply with appreciation starting amount
-    let appreciationMultiple = 1.9;
-    // let appreciationStartingAmount = Math.round((startingHomeValue * 0.725) / 1000) * 1000;
+    // let appreciationMultiple = 1.9;
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
 
@@ -38,7 +37,8 @@ function performCalculations() {
       // Calculate the home value for each year based on appreciation
       let homeValueForYear = startingHomeValue * Math.pow(1 + appreciation, year);
 
-      let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
+      // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
+      let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
