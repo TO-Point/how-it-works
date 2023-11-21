@@ -62,7 +62,6 @@ function performCalculations() {
       });
 
       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
-      let capOuterWraps = chartCol.querySelectorAll(".cap-outerwrap");
       console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
 
       // Event listener to format the input value with commas whenever it changes
@@ -78,17 +77,26 @@ function performCalculations() {
         if (isCapUsed) {
           capIndicator.style.opacity = "1";
           capIndicator.style.pointerEvents = "auto";
-          capOuterWraps.forEach((capOuterWrap) => {
-            capOuterWrap.classList.add("active");
-          });
         } else {
           capIndicator.style.opacity = "0";
           capIndicator.style.pointerEvents = "none";
-          capOuterWraps.forEach((capOuterWrap) => {
-            capOuterWrap.classList.remove("active");
-          });
         }
       }
+      // Select all cap-indicators
+      let capIndicators = document.querySelectorAll(".cap-indicator");
+
+      // Add mouseenter and mouseleave event listeners to each cap-indicator
+      capIndicators.forEach((capIndicator) => {
+        capIndicator.addEventListener("mouseenter", function () {
+          // On mouseenter, find the parent .chart-col-wrap and increase its z-index
+          this.closest(".chart-col-wrap").style.zIndex = "10";
+        });
+
+        capIndicator.addEventListener("mouseleave", function () {
+          // On mouseleave, find the parent .chart-col-wrap and reset its z-index
+          this.closest(".chart-col-wrap").style.zIndex = "0";
+        });
+      });
     }
 
     // Adjust the height of chart columns based on the highest value
