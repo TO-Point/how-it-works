@@ -82,21 +82,6 @@ function performCalculations() {
           capIndicator.style.pointerEvents = "none";
         }
       }
-      // Select all cap-indicators
-      let capIndicators = document.querySelectorAll(".cap-indicator");
-
-      // Add mouseenter and mouseleave event listeners to each cap-indicator
-      capIndicators.forEach((capIndicator) => {
-        capIndicator.addEventListener("mouseenter", function () {
-          // On mouseenter, find the parent .chart-col-wrap and increase its z-index
-          this.closest(".chart-col-wrap").style.zIndex = "10";
-        });
-
-        capIndicator.addEventListener("mouseleave", function () {
-          // On mouseleave, find the parent .chart-col-wrap and reset its z-index
-          this.closest(".chart-col-wrap").style.zIndex = "0";
-        });
-      });
     }
 
     // Adjust the height of chart columns based on the highest value
