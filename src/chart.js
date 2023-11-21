@@ -62,6 +62,7 @@ function performCalculations() {
       });
 
       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
+      let capOuterWraps = chartCol.querySelectorAll(".cap-outerwrap");
       console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
 
       // Event listener to format the input value with commas whenever it changes
@@ -77,9 +78,15 @@ function performCalculations() {
         if (isCapUsed) {
           capIndicator.style.opacity = "1";
           capIndicator.style.pointerEvents = "auto";
+          capOuterWraps.forEach((capOuterWrap) => {
+            capOuterWrap.classList.add("active");
+          });
         } else {
           capIndicator.style.opacity = "0";
           capIndicator.style.pointerEvents = "none";
+          capOuterWraps.forEach((capOuterWrap) => {
+            capOuterWrap.classList.remove("active");
+          });
         }
       }
     }
