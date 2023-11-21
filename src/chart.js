@@ -13,11 +13,9 @@ function performCalculations() {
 
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
-    // Calculate the initial offer (10% of home value)
+    // Calculate the initial offer (16% of home value)
     let pointOffer = startingHomeValue * 0.16;
 
-    // Define a constant to multiply with appreciation starting amount
-    // let appreciationMultiple = 1.9;
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
 
@@ -25,7 +23,7 @@ function performCalculations() {
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
     document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
 
-    // // Get the appreciation rate from the slider
+    // Get the appreciation rate from the slider
     let sliderPosition = parseInt(document.querySelector(".custom-range-slider").value);
     let appreciation = appreciationRates[sliderPosition];
 
@@ -42,7 +40,7 @@ function performCalculations() {
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
-      let capBasedRepayment = pointOffer * Math.pow(1.2, year);
+      let capBasedRepayment = pointOffer * Math.pow(1.2, year); //pointOffer * Math.pow((1+(.2/12)), (year * 12))
 
       let shareBasedRepayment = shareOfAppreciation + pointOffer;
 
