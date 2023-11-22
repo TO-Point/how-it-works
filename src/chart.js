@@ -46,6 +46,7 @@ function performCalculations() {
 
       let repayment = Math.min(capBasedRepayment, shareBasedRepayment);
       let isCapUsed = capBasedRepayment == repayment;
+      let pointSharePercentage = (shareBasedRepayment / homeValueForYear) * 100;
 
       // Store all calculated data for the year
       yearlyData.push({
@@ -57,6 +58,7 @@ function performCalculations() {
         shareBasedRepayment: shareBasedRepayment,
         repayment: repayment,
         isCapUsed: isCapUsed,
+        pointSharePercentage: pointSharePercentage,
       });
 
       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
@@ -81,15 +83,17 @@ function performCalculations() {
         }
       }
     }
-
-    // Adjust the height of chart columns based on the highest value
     const referenceValue = isDepreciation ? startingHomeValue : yearlyData[yearlyData.length - 1].homeValueForYear;
     yearlyData.forEach((data) => {
       const chartCol = document.querySelector(`.chart-col[data-year="${data.year}"]`);
+      const pointElement = chartCol.querySelector(".chart-data.point");
 
-      if (chartCol) {
+      if (chartCol && pointElement) {
         const heightPercentage = (data.homeValueForYear / referenceValue) * 90;
+        const pointHeightPercentage = data.pointSharePercentage;
+
         chartCol.style.height = `${heightPercentage}%`;
+        pointElement.style.height = `${pointHeightPercentage}%`;
       }
     });
   }
@@ -216,5 +220,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.getElementById("currentValue").addEventListener("input", function (e) {
     e.target.value = e.target.value.replace(/[^0-9]/g, "");
+  });
+});
+$(document).ready(function () {
+  $(".calc-section").keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
   });
 });
