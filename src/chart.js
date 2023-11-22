@@ -222,3 +222,11 @@ document.addEventListener("DOMContentLoaded", function () {
     e.target.value = e.target.value.replace(/[^0-9]/g, "");
   });
 });
+$(document).ready(function () {
+  $(".calc-section").keydown(function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
