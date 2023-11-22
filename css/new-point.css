@@ -7671,7 +7671,7 @@ figcaption {
 
 .chart-data.point {
   z-index: 0;
-  height: 30%;
+  /* height: 30%; */
   background-color: #8e9eb8;
   position: absolute;
 }
