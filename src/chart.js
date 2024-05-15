@@ -4,8 +4,6 @@ function formatNumber(num) {
 }
 let yearlyData = [];
 let appreciationRates = [-0.015, 0, 0.015, 0.035, 0.055];
-let simpleAppreciationMultiple = 2.54;
-// pulled from google sheet: https://docs.google.com/spreadsheets/d/1aABIztE_6OGUzxUK8m2RQs6gqOhMeTHMP1i6AMSFxok/edit#gid=1507021422
 
 // Main function to perform calculations and update the UI
 function performCalculations() {
@@ -39,6 +37,8 @@ function performCalculations() {
 
       // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
       // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
+      let simpleAppreciationMultiple = 2.54;
+      // above pulled from google sheet: https://docs.google.com/spreadsheets/d/1aABIztE_6OGUzxUK8m2RQs6gqOhMeTHMP1i6AMSFxok/edit#gid=1507021422
       let pointPercentage = simpleAppreciationMultiple * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
