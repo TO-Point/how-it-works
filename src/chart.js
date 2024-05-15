@@ -43,8 +43,7 @@ function performCalculations() {
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
-      // let capBasedRepayment = pointOffer * Math.pow(1 + 0.2 / 12, year * 12);
-      let capBasedRepayment = pointOffer * Math.pow(1 + 0.18 / 12, year * 12);
+      let capBasedRepayment = pointOffer * Math.pow(1 + 0.2 / 12, year * 12);
       let shareBasedRepayment = shareOfAppreciation + pointOffer;
 
       let repayment = Math.min(capBasedRepayment, shareBasedRepayment);
