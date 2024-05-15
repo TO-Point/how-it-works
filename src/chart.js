@@ -14,7 +14,7 @@ function performCalculations() {
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
     // Calculate the initial offer (16% of home value)
-    let pointOffer = startingHomeValue * 0.16;
+    let pointOffer = startingHomeValue * 0.2;
 
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
@@ -36,7 +36,8 @@ function performCalculations() {
       let homeValueForYear = startingHomeValue * Math.pow(1 + appreciation, year);
 
       // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
-      let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
+      // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
+      let pointPercentage = 5.4 * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
