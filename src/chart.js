@@ -4,6 +4,7 @@ function formatNumber(num) {
 }
 let yearlyData = [];
 let appreciationRates = [-0.015, 0, 0.015, 0.035, 0.055];
+let simpleAppreciateMultiple = 2.54;
 
 // Main function to perform calculations and update the UI
 function performCalculations() {
@@ -37,7 +38,7 @@ function performCalculations() {
 
       // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
       // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
-      let pointPercentage = 5.4 * (pointOffer / startingHomeValue);
+      let pointPercentage = simpleAppreciateMultiple * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
