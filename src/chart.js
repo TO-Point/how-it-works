@@ -4,7 +4,8 @@ function formatNumber(num) {
 }
 let yearlyData = [];
 let appreciationRates = [-0.015, 0, 0.015, 0.035, 0.055];
-let simpleAppreciateMultiple = 2.54;
+let simpleAppreciationMultiple = 2.54;
+// pulled from google sheet: https://docs.google.com/spreadsheets/d/1aABIztE_6OGUzxUK8m2RQs6gqOhMeTHMP1i6AMSFxok/edit#gid=1507021422
 
 // Main function to perform calculations and update the UI
 function performCalculations() {
@@ -14,7 +15,7 @@ function performCalculations() {
 
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
-    // Calculate the initial offer (16% of home value)
+    // Calculate the initial offer (16% of home value although we can go as high as 20%)
     let pointOffer = startingHomeValue * 0.2;
 
     // Calculate the appreciation starting amount
@@ -38,12 +39,12 @@ function performCalculations() {
 
       // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
       // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
-      let pointPercentage = simpleAppreciateMultiple * (pointOffer / startingHomeValue);
+      let pointPercentage = simpleAppreciationMultiple * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
-      let capBasedRepayment = pointOffer * Math.pow(1 + 0.2 / 12, year * 12);
-
+      // let capBasedRepayment = pointOffer * Math.pow(1 + 0.2 / 12, year * 12);
+      let capBasedRepayment = pointOffer * Math.pow(1 + 0.18 / 12, year * 12);
       let shareBasedRepayment = shareOfAppreciation + pointOffer;
 
       let repayment = Math.min(capBasedRepayment, shareBasedRepayment);
