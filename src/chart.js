@@ -17,7 +17,7 @@ function performCalculations() {
     let pointOffer = startingHomeValue * 0.16;
 
     // Calculate the appreciation starting amount
-    let appreciationStartingAmount = Math.round((startingHomeValue * 0.71) / 1000) * 1000;
+    let appreciationStartingAmount = Math.round((startingHomeValue * 0.73) / 1000) * 1000;
 
     // Update the UI with the calculated point offer and appreciation starting amount
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
@@ -37,13 +37,13 @@ function performCalculations() {
 
       // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
       // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
-      let simpleAppreciationMultiple = 2.54;
+      let simpleAppreciationMultiple = 2.44;
       // above pulled from google sheet: https://docs.google.com/spreadsheets/d/1aABIztE_6OGUzxUK8m2RQs6gqOhMeTHMP1i6AMSFxok/edit#gid=1507021422
       let pointPercentage = simpleAppreciationMultiple * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
-      let capBasedRepayment = pointOffer * Math.pow(1 + 0.2 / 12, year * 12);
+      let capBasedRepayment = pointOffer * Math.pow(1 + 0.183 / 12, year * 12);
       let shareBasedRepayment = shareOfAppreciation + pointOffer;
 
       let repayment = Math.min(capBasedRepayment, shareBasedRepayment);
