@@ -180,6 +180,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
         document.querySelector(".point-share").textContent = formatNumber(Math.round(data.repayment / 1000) * 1000);
         document.querySelector(".home-value").textContent = formatNumber(Math.round(data.homeValueForYear / 1000) * 1000);
         document.querySelector(".homeowner-share").textContent = formatNumber(Math.round((data.homeValueForYear - data.repayment) / 1000) * 1000);
+
+        // Add this new code to handle the span-hide-nocap elements
+        const spanHideNocapElements = document.querySelectorAll(".calc-pricing-explainer .span-hide-nocap");
+        spanHideNocapElements.forEach((element) => {
+          if (data.isCapUsed) {
+            element.style.display = "inline-block";
+          } else {
+            element.style.display = "none";
+          }
+        });
       }
       // Get the elements with class 'wrap-get-started' and 'final-home-value-card'
       let getStartedElement = document.querySelector(".wrap-get-started");
