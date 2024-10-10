@@ -92,7 +92,7 @@ function performCalculations() {
       const pointElement = chartCol.querySelector(".chart-data.point");
 
       if (chartCol && pointElement) {
-        const heightPercentage = (data.homeValueForYear / referenceValue) * 90;
+        const heightPercentage = (data.homeValueForYear / referenceValue) * 100;
         const pointHeightPercentage = data.pointSharePercentage;
 
         chartCol.style.height = `${heightPercentage}%`;
