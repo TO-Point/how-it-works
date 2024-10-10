@@ -21,7 +21,7 @@ function performCalculations() {
 
     // Update the UI with the calculated point offer and appreciation starting amount
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
-    document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
+    // document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
 
     // Get the appreciation rate from the slider
     let sliderPosition = parseInt(document.querySelector(".custom-range-slider").value);
