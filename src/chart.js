@@ -62,6 +62,7 @@ function performCalculations() {
         repayment: repayment,
         isCapUsed: isCapUsed,
         pointSharePercentage: pointSharePercentage,
+        impliedInterest: (Math.pow(repayment / pointOffer, 1 / year) - 1) * 100,
       });
 
       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
@@ -180,6 +181,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
         document.querySelector(".point-share").textContent = formatNumber(Math.round(data.repayment / 1000) * 1000);
         document.querySelector(".home-value").textContent = formatNumber(Math.round(data.homeValueForYear / 1000) * 1000);
         document.querySelector(".homeowner-share").textContent = formatNumber(Math.round((data.homeValueForYear - data.repayment) / 1000) * 1000);
+
+        // Add this line to update the implied interest
+        document.getElementById("imp-int").textContent = data.impliedInterest.toFixed(1);
 
         // Add this new code to handle the span-hide-nocap elements
         const spanHideNocapElements = document.querySelectorAll(".calc-pricing-explainer .span-hide-nocap");
