@@ -149,7 +149,7 @@ document.querySelector(".custom-range-slider").addEventListener("input", functio
 
 // On window load, set default values and perform initial calculations
 window.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("currentValue").value = "300,000";
+  document.getElementById("currentValue").value = "500,000";
   performCalculations();
   document.querySelector(".calc-pricing-explainer").style.display = "none";
   // Add click event listeners to chart column wrappers
@@ -208,7 +208,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     });
   });
 });
-
 // Event listener for DOMContentLoaded to set the appreciation type label
 document.addEventListener("DOMContentLoaded", function () {
   const rangeSlider = document.querySelector(".custom-range-slider");
