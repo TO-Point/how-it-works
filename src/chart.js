@@ -37,7 +37,7 @@ function performCalculations() {
 
       // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
       // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
-      let simpleAppreciationMultiple = 2.2;
+      let simpleAppreciationMultiple = 2.14;
       // above pulled from google sheet: https://docs.google.com/spreadsheets/d/1aABIztE_6OGUzxUK8m2RQs6gqOhMeTHMP1i6AMSFxok/edit#gid=1507021422
       let pointPercentage = simpleAppreciationMultiple * (pointOffer / startingHomeValue);
 
