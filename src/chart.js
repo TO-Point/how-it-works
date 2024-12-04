@@ -14,7 +14,7 @@ function performCalculations() {
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
     // Calculate the initial offer with $30,000 minimum
-    let pointOffer = Math.max(30000, startingHomeValue * 0.1);
+    let pointOffer = Math.max(25000, startingHomeValue * 0.1);
 
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.73) / 1000) * 1000;
@@ -69,9 +69,20 @@ function performCalculations() {
       // console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
 
       // Event listener to format the input value with commas whenever it changes
-      document.getElementById("currentValue").addEventListener("input", function () {
-        this.value = formatNumber(this.value.replace(/,/g, ""));
+      document.getElementById("currentValue").addEventListener("input", function (e) {
+        // Remove non-numeric characters and format with commas
+        let inputValue = parseFloat(this.value.replace(/,/g, ""));
+        const minValue = 250000; // Set the minimum value
+      
+        // If the value is less than the minimum, set it to the minimum
+        if (isNaN(inputValue) || inputValue < minValue) {
+          inputValue = minValue;
+        }
+      
+        // Update the input value with the formatted number
+        this.value = formatNumber(inputValue.toString());
       });
+
 
       // Event listener for input changes in the current value field
       document.getElementById("currentValue").addEventListener("input", performCalculations);
