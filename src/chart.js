@@ -66,7 +66,7 @@ function performCalculations() {
       });
 
       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
-      console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
+      // console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
 
       // Event listener to format the input value with commas whenever it changes
       document.getElementById("currentValue").addEventListener("input", function () {
