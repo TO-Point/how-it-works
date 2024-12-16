@@ -5,23 +5,45 @@ function formatNumber(num) {
 let yearlyData = [];
 let appreciationRates = [-0.015, 0, 0.015, 0.035, 0.055];
 
-// Main function to perform calculations and update the UI
 function performCalculations() {
   // Reset the yearly data array
   yearlyData = [];
   let startingHomeValue = parseFloat(document.getElementById("currentValue").value.replace(/,/g, ""));
 
+  // Get the validation element
+  const validationElement = document.getElementById("currentValueValidation");
+
+  // Check if startingHomeValue is below $250,000
+  if (startingHomeValue < 250000) {
+    // Update validation message
+    validationElement.textContent = "Minimum home value: $250,000";
+
+    // Reset chart to base state
+    document.querySelectorAll(".chart-col").forEach((col) => {
+      col.style.height = "0"; // Reset height
+      const pointElement = col.querySelector(".chart-data.point");
+      if (pointElement) {
+        pointElement.style.height = "0"; // Reset point height
+      }
+    });
+
+    // Exit the function to prevent further calculations
+    return;
+  } else {
+    // Reset validation message
+    validationElement.textContent = "Point covers upfront appraisal costs";
+  }
+
   // Validate if the starting home value is a number
   if (!isNaN(startingHomeValue)) {
     // Calculate the initial offer with $30,000 minimum
-    let pointOffer = Math.max(25000, startingHomeValue * 0.1);
+    let pointOffer = Math.min(startingHomeValue * 0.1, 500000);
 
     // Calculate the appreciation starting amount
     let appreciationStartingAmount = Math.round((startingHomeValue * 0.73) / 1000) * 1000;
 
     // Update the UI with the calculated point offer and appreciation starting amount
     document.querySelector(".point-offer").textContent = formatNumber(pointOffer.toFixed(0));
-    // document.querySelector(".appreciation-starting-point").textContent = formatNumber(appreciationStartingAmount.toFixed(0));
 
     // Get the appreciation rate from the slider
     let sliderPosition = parseInt(document.querySelector(".custom-range-slider").value);
@@ -35,15 +57,11 @@ function performCalculations() {
       // Calculate the home value for each year based on appreciation
       let homeValueForYear = startingHomeValue * Math.pow(1 + appreciation, year);
 
-      // let pointPercentage = (pointOffer / appreciationStartingAmount) * appreciationMultiple;
-      // let pointPercentage = 3.9 * (pointOffer / startingHomeValue);
       let simpleAppreciationMultiple = 2.14;
-      // above pulled from google sheet: https://docs.google.com/spreadsheets/d/1aABIztE_6OGUzxUK8m2RQs6gqOhMeTHMP1i6AMSFxok/edit#gid=1507021422
       let pointPercentage = simpleAppreciationMultiple * (pointOffer / startingHomeValue);
 
       let shareOfAppreciation = (homeValueForYear - appreciationStartingAmount) * pointPercentage;
 
-      // let capBasedRepayment = pointOffer * Math.pow(1 + 0.183 / 12, year * 12);
       let capBasedRepayment = pointOffer * Math.pow(1 + 0.175 / 12, year * 12);
       let shareBasedRepayment = shareOfAppreciation + pointOffer;
 
@@ -66,26 +84,7 @@ function performCalculations() {
       });
 
       const chartCol = document.querySelector(`.chart-col[data-year="${year}"]`);
-      // console.log("capBasedRepayment < shareBasedRepayment: ", capBasedRepayment < shareBasedRepayment, capBasedRepayment, shareBasedRepayment);
 
-      // Event listener to format the input value with commas whenever it changes
-      document.getElementById("currentValue").addEventListener("input", function (e) {
-        // Remove non-numeric characters and format with commas
-        let inputValue = parseFloat(this.value.replace(/,/g, ""));
-        const minValue = 250000; // Set the minimum value
-      
-        // If the value is less than the minimum, set it to the minimum
-        if (isNaN(inputValue) || inputValue < minValue) {
-          inputValue = minValue;
-        }
-      
-        // Update the input value with the formatted number
-        this.value = formatNumber(inputValue.toString());
-      });
-
-
-      // Event listener for input changes in the current value field
-      document.getElementById("currentValue").addEventListener("input", performCalculations);
       // Update the visibility of the cap indicator based if the cap was used
       let capIndicator = chartCol.querySelector(".cap-indicator");
       if (capIndicator) {
@@ -98,6 +97,7 @@ function performCalculations() {
         }
       }
     }
+
     const referenceValue = isDepreciation ? startingHomeValue : yearlyData[yearlyData.length - 1].homeValueForYear;
     yearlyData.forEach((data) => {
       const chartCol = document.querySelector(`.chart-col[data-year="${data.year}"]`);
@@ -219,6 +219,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     });
   });
 });
+
 // Event listener for DOMContentLoaded to set the appreciation type label
 document.addEventListener("DOMContentLoaded", function () {
   const rangeSlider = document.querySelector(".custom-range-slider");
@@ -245,15 +246,21 @@ document.addEventListener("DOMContentLoaded", function () {
         divElement.textContent = "unknown value";
     }
   });
-  document.getElementById("currentValue").addEventListener("input", function (e) {
-    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+  document.getElementById("currentValue").addEventListener("input", function () {
+    let rawValue = this.value.replace(/,/g, "").replace(/[^0-9]/g, "");
+    if (rawValue) {
+      this.value = formatNumber(rawValue);
+    } else {
+      this.value = "";
+    }
   });
 });
-$(document).ready(function () {
-  $(".calc-section").keydown(function (event) {
-    if (event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".hiw_calc-input-boxes").forEach(function (element) {
+    element.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+      }
+    });
   });
 });
